@@ -1,3 +1,5 @@
-# Implement your Node class here
+# Initializes Node class
 class Node:
-    pass # delete this line
+    def __init__(self, value):
+        self.value = value
+        self.next = None

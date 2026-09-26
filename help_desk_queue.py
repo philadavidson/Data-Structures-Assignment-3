@@ -1,15 +1,55 @@
-# Import the Node class you created in node.py
+# Imports the Node class from node.py
 from node import Node
 
-# Implement your Queue class here
+# Initializes the Queue class
 class Queue:
-    # Delete the following line and implement your Queue class
-    pass
-    
+    def __init__(self):
+       self.front = None
+       self.rear = None
+
+    # Adds a customer to the end of the queue
+    def enqueue(self, value):
+        new_node = Node(value)
+        if not self.front:
+            self.front = new_node
+            self.rear = new_node
+        else:
+            self.rear.next = new_node
+            self.rear = new_node
+
+    # Removes and returns the customer at the front of the queue
+    def dequeue(self):
+        if not self.front:
+            return None
+        removed_node = self.front
+        self.front = self.front.next
+
+        if not self.front:
+            self.rear = None 
+        return removed_node.value
+
+    # Returns the first customer in line without removing them
+    def peek(self):
+        if self.front:
+            return self.front.value
+        else:
+            return None
+
+    # Prints the current customer queue
+    def print_queue(self):
+        current = self.front
+        if not current:
+            print("Queue is empty")
+            return
+        while current:
+            print(f"- {current.value}")
+            current = current.next
 
 
+# Runs the interactive help desk queue
 def run_help_desk():
-    # Create an instance of the Queue class
+    # Creates an instance of the Queue class
+    queue = Queue()
     
 
     while True:
@@ -21,27 +61,35 @@ def run_help_desk():
         print("5. Exit")
         choice = input("Select an option: ")
 
+        # Adds a customer
         if choice == "1":
             name = input("Enter customer name: ")
-            # Add the customer to the queue
-            
+            queue.enqueue(name)
             
             print(f"{name} added to the queue.")
+        
+        # Removes and returns the customer at the front of the queue
         elif choice == "2":
-            # Help the next customer in the queue and return message that they were helped
-            pass # delete this line
+            name = queue.dequeue()
+            if name:
+                print(f"{name} has been helped.")
+            else:
+                print("No customers are waiting.")
 
-
+        # Views the first customer without removing them from the queue
         elif choice == "3":
-            # Peek at the next customer in the queue and return their name
-            pass # delete this line
+            name = queue.peek()
+            if name:
+                print(f"{name} is next in line.")
+            else:
+                print("No customers are waiting.")
 
-
+        # Print all customers in the queue
         elif choice == "4":
-            # Print all customers in the queue
             print("\nWaiting customers:")
+            queue.print_queue()
             
-
+        # Exits the help desk queue
         elif choice == "5":
             print("Exiting Help Desk System.")
             break
